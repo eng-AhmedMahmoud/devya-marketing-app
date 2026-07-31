@@ -75,6 +75,12 @@ export function PostForm({
       setError('Give the AI a topic first');
       return;
     }
+    if (
+      (copyEn.trim() || copyAr.trim()) &&
+      !window.confirm('Overwrite the existing copy with an AI draft?')
+    ) {
+      return;
+    }
     setError(null);
     setAiPending(true);
     try {
@@ -85,6 +91,7 @@ export function PostForm({
       });
       setCopyEn(draft.hashtags.length > 0 ? `${draft.copyEn}\n\n${draft.hashtags.join(' ')}` : draft.copyEn);
       setCopyAr(draft.copyAr);
+      setAiTopic('');
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'AI draft failed');
     } finally {
