@@ -100,7 +100,7 @@ export function Sidebar() {
 
   return (
     <aside className="hidden lg:flex w-60 shrink-0 flex-col border-r border-white/[0.06] bg-ink-950/60 backdrop-blur-sm">
-      <div className="px-5 pt-6 pb-4 flex items-center gap-2">
+      <div className="px-5 pt-6 pb-4 flex flex-col items-start gap-2">
         <Link href="/" className="ring-focus rounded-md">
           <DevyaLogo width={104} />
         </Link>
