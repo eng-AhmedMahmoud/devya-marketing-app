@@ -26,9 +26,6 @@ export default async function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center gap-2 mb-8">
           <DevyaLogo width={120} />
-          <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] uppercase tracking-wider text-ink-300">
-            PM
-          </span>
         </div>
         <div className="surface-strong p-6">
           <h1 className="text-lg font-semibold text-white mb-1">Sign in</h1>

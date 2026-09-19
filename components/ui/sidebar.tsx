@@ -104,9 +104,6 @@ export function Sidebar() {
         <Link href="/" className="ring-focus rounded-md">
           <DevyaLogo width={104} />
         </Link>
-        <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] uppercase tracking-wider text-ink-300">
-          Marketing
-        </span>
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 pb-4 space-y-5">
