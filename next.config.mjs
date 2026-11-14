@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Self-contained server for the Docker image on the Devya VPS (left Vercel 2026-11-14).
+  output: 'standalone',
   images: {
     // Known CMS media hosts rendered via next/image (see lib/img.ts).
     remotePatterns: [

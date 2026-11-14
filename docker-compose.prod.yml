@@ -1,0 +1,35 @@
+# Production stack on the Devya VPS (/home/devya/projects/devya-marketing-app).
+# No build here: scripts/deploy.sh builds the Next standalone server on the Mac,
+# ships it to releases/<sha> and points ./current at it. A stock Node image runs
+# it read-only. nginx proxies marketing.devya-solutions.com to 127.0.0.1:3151.
+# The app had no env vars on Vercel; it runs on the code defaults (API proxy to
+# https://api.devya-solutions.com, session cookie devya_session).
+services:
+  web:
+    image: node:24.22.1-alpine
+    container_name: devya-marketing-app
+    restart: unless-stopped
+    user: "1000:1000"
+    working_dir: /app
+    command: ["node", "server.js"]
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+    volumes:
+      - ./current:/app:ro
+    tmpfs:
+      # Next's image/fetch cache; the release tree itself stays read-only.
+      - /app/.next/cache:uid=1000,gid=1000,size=64m
+    ports:
+      # Loopback only: nginx is the public entry point.
+      - "127.0.0.1:3151:3000"
+    mem_limit: 384m
+    healthcheck:
+      # / redirects to /login without a session; /login renders.
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/login').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
